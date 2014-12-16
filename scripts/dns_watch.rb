@@ -9,6 +9,9 @@
 require 'resolv'
 require 'optparse'
 
+# initizlize var to keep track of the domain to track for the SOA serial
+domain_for_soa = ''
+
 # initialize the argument parser defaults
 options = {}
 options[:hostname] = 'www.google.com'
@@ -76,11 +79,41 @@ end
 puts "Checking DNS for #{options[:hostname]} with a #{options[:delay]}s delay "\
      "against #{options.fetch(:nameserver, 'the default system resolver')}"
 begin
+  # find the domain to track for the SOA serial number
+  hostname_split = options[:hostname].split('.')
+  hostname_split_length = hostname_split.length
+  hostname_split_counter = 0
+  loop do
+    host_to_check = hostname_split[hostname_split_counter,
+                                   hostname_split_length].join('.')
+
+    # Try to find the SOA
+    records = dns.getresources(host_to_check, Resolv::DNS::Resource::IN::SOA)
+
+    if records.length > 0
+      domain_for_soa = host_to_check
+      puts "Tracking SOA serial for #{domain_for_soa}"
+      break
+    end
+
+    # move on to the next level up
+    hostname_split_counter += 1
+
+    next unless hostname_split_counter == hostname_split_length
+
+    # This should never happen (root level should have a soa)
+    STDERR.print "Can't find a SOA for #{options[:hostname]} "
+    STDERR.puts 'or any of its parents, skipping SOA S/N tracking'
+  end
 
   # run the loop
   loop do
     print Time.now.utc.to_s
-    print '  ~~'
+    print ' ~~'
+
+    # Grab the SOA Serial
+    records = dns.getresources(domain_for_soa, Resolv::DNS::Resource::IN::SOA)
+    print ' ', records[0].serial, ' ~~' if records.length > 0
 
     if options[:types].include?(:A)
       records = dns.getresources(options[:hostname],
