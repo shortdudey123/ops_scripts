@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/shortdudey123/ops_scripts.svg?branch=master)](https://travis-ci.org/shortdudey123/ops_scripts)
+
 # Ops Scripts
 
 This repo serves as a collection of scripts that can be useful for DevOps / Ops Engineers.
