@@ -40,8 +40,8 @@ host:~/ops_scripts user (master*)$
 
 ## Testing
 
-  bundle install --path .bundle
-  bundle exec rake
+* bundle install --path .bundle
+* bundle exec rake
 
 ## License
 [Apache 2](http://www.apache.org/licenses/LICENSE-2.0)
