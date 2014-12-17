@@ -20,7 +20,8 @@ options[:types] = []
 
 # initialize the argument parser itself
 OptionParser.new do |opts|
-  opts.banner = "Usage: #{__FILE__} [options]"
+  opts.banner = "Usage: #{__FILE__} [options]
+Output: <timestamp> ~~ <SOA serial> ~~ <data requested>"
 
   # set the domain that needs to be checked
   opts.on('-h', '--hostname HOSTNAME', 'Specify the hostname to check '\

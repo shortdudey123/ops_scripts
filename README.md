@@ -13,6 +13,7 @@ Used to do continual DNS queries against a hostname.  It is useful for doing DNS
 ```sh
 host:~/ops_scripts user (master*)$ ./scripts/dns_watch.rb --help
 Usage: ./scripts/dns_watch.rb [options]
+Output: <timestamp> ~~ <SOA serial> ~~ <data requested>
     -h, --hostname HOSTNAME          Specify the hostname to check (default: www.google.com)
     -d, --delay DELAY                Delay in seconds between checks (default: 1)
     -n, --nameserver NAMESERVER      NS to query (default: the default system resolver)
@@ -28,10 +29,10 @@ host:~/ops_scripts user (master*)$
 ```sh
 host:~/ops_scripts user (master*)$ ./scripts/dns_watch.rb
 Checking DNS for www.google.com with a 1s delay against the default system resolver
-2014-12-16 00:24:56 UTC  ~~  74.125.239.113  74.125.239.114  74.125.239.115  74.125.239.116  74.125.239.112
-2014-12-16 00:24:57 UTC  ~~  74.125.20.105  74.125.20.104  74.125.20.147  74.125.20.106  74.125.20.103  74.125.20.99
-2014-12-16 00:24:58 UTC  ~~  74.125.239.113  74.125.239.114  74.125.239.115  74.125.239.116  74.125.239.112
-2014-12-16 00:24:59 UTC  ~~  74.125.20.147  74.125.20.106  74.125.20.104  74.125.20.105  74.125.20.99  74.125.20.103
+2014-12-16 00:24:56 UTC ~~ 2014112500 ~~  74.125.239.113  74.125.239.114  74.125.239.115  74.125.239.116  74.125.239.112
+2014-12-16 00:24:57 UTC ~~ 2014112500 ~~  74.125.20.105  74.125.20.104  74.125.20.147  74.125.20.106  74.125.20.103  74.125.20.99
+2014-12-16 00:24:58 UTC ~~ 2014112500 ~~  74.125.239.113  74.125.239.114  74.125.239.115  74.125.239.116  74.125.239.112
+2014-12-16 00:24:59 UTC ~~ 2014112500 ~~  74.125.20.147  74.125.20.106  74.125.20.104  74.125.20.105  74.125.20.99  74.125.20.103
 ^C
 Exiting...
 host:~/ops_scripts user (master*)$
